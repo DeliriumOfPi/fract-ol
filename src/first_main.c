@@ -12,7 +12,6 @@
 
 #include "fractol.h"
 #include <stdlib.h>
-#include "MLX42.h"
 //#include <unistd.h>
 #include <stdio.h>
 #include <math.h>

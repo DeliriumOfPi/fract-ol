@@ -15,7 +15,7 @@
 
 # include "MLX42/MLX42.h"
 # include <stdlib.h>
-# include <math.c>
+# include <math.h>
 
 # define WIDTH 640
 # define HEIGHT 480
@@ -32,6 +32,22 @@ typedef enum	e_fractal_type
 	PHOENIX
 } t_fractal_type;
 
+typedef enum	e_palette
+{
+	GRAYSCALE,
+	PASTEL,
+	ICE,
+	OCEAN,
+	CYBER,
+	ELECTRIC,
+	PSYCHEDELIC,
+	RAINBOW,
+	SUNSET,
+	INFERNO,
+	FIRE,
+	MAGENTA
+} t_palette;
+
 typedef struct	s_complex
 {
 	double	re;
@@ -43,18 +59,19 @@ typedef struct	s_fractal
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_fractal_type	type;
-	t_complex		z_min;
-	t_complex		z_max;
-	t_complex		c;
-	int				palette;
+	t_complex		c_min;
+	t_complex		c_max;
+	t_complex		julia_z;
+	t_complex		phoenix_p;
+	t_palette		palette;
 	int				max_iter;
-}
+} t_fractal;
 
-int			mandelbrot(t_complex z, int max_iter);
-int			julia(t_complex z, t_complex c, int max_iter);
-int			newton(t_complex z, int max_iter);
-int			burning_ship(t_complex z, int max_iter);
-int			phoenix(t_complex z, t_complex prev_z, int max_iter);
+int			mandelbrot(t_complex *c, int max_iter);
+int			julia(t_complex *z, t_complex *c, int max_iter);
+int			newton(t_complex *z, int max_iter);
+int			burning_ship(t_complex *c, int max_iter);
+int			phoenix(t_complex *z0, t_complex *c, t_complex *p, int max_iter);
 void		draw_fractal(t_fractal *fractal);
 uint32_t	color_palette(int iter, int palette);
 void		key_hook(mlx_key_data_t keydata, void *param);
