@@ -17,11 +17,15 @@
 # include <stdlib.h>
 # include <math.h>
 
+//# define WIDTH 64
+//# define HEIGHT 48
 # define WIDTH 640
 # define HEIGHT 480
 //# define WIDTH 1920
 //# define HEIGHT 1080
-# define DEFAULT_ITER 300
+# define DEFAULT_ITER 100
+# define MOVE_STEP_FACTOR 0.1
+# define ZOOM_FACTOR 0.8
 
 typedef enum	e_fractal_type
 {
@@ -29,7 +33,8 @@ typedef enum	e_fractal_type
 	JULIA,
 	NEWTON,
 	BURNING_SHIP,
-	PHOENIX
+	PHOENIX,
+	FRACTAL_COUNT
 } t_fractal_type;
 
 typedef enum	e_palette
@@ -45,7 +50,10 @@ typedef enum	e_palette
 	SUNSET,
 	INFERNO,
 	FIRE,
-	MAGENTA
+	MAGENTA,
+	REDSCALE,
+	BLACKWHITE,
+	COLOR_COUNT
 } t_palette;
 
 typedef struct	s_complex
@@ -64,7 +72,12 @@ typedef struct	s_fractal
 	t_complex		julia_z;
 	t_complex		phoenix_p;
 	t_palette		palette;
+	int				width;
+	int				height;
 	int				max_iter;
+	bool			mouse_down;
+	double				mouse_x;
+	double				mouse_y;
 } t_fractal;
 
 int			mandelbrot(t_complex *c, int max_iter);
@@ -73,8 +86,13 @@ int			newton(t_complex *z, int max_iter);
 int			burning_ship(t_complex *c, int max_iter);
 int			phoenix(t_complex *z0, t_complex *c, t_complex *p, int max_iter);
 void		draw_fractal(t_fractal *fractal);
-uint32_t	color_palette(int iter, int palette);
+uint32_t	color_palette(int iter, int max_iter, t_palette palette);
 void		key_hook(mlx_key_data_t keydata, void *param);
 void		scroll_hook(double xdelta, double ydelta, void *param);
+void mouse_down_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+void mouse_move_hook(double xpos, double ypos, void *param);
+void resize_hook(int32_t width, int32_t height, void *param);
+void    zoom(t_fractal *frac, t_complex fix, double z);
+
 
 #endif
