@@ -6,11 +6,32 @@
 /*   By: msottana <msottana@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 16:04:04 by msottana          #+#    #+#             */
-/*   Updated: 2025/03/30 16:04:06 by msottana         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:50:15 by msottana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void	ft_error(mlx_t	*mlx, char *error_msg)
+{
+	if (mlx != NULL)
+		mlx_terminate(*mlx);
+	if (error_msg != NULL)
+
+	exit(EXIT_FAILURE);
+}
+
+void	init_fractal(int argc, char *argv[], t_fractal *frac)
+{
+	if (argc < 1)
+
+	frac.type = 
+}
+
+void	init_mlx(t_fractal *frac)
+{
+
+}
 
 void	ft_hook(void *param)
 {
@@ -19,7 +40,7 @@ void	ft_hook(void *param)
 	draw_fractal(frac);
 }
 
-int	main(int args, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_fractal	frac;
 
@@ -28,16 +49,18 @@ int	main(int args, char *argv[])
     mlx_image_to_window(frac.mlx, frac.img, 0, 0);
 
     frac.type = MANDELBROT;
-	//frac.type = JULIA;
-	//frac.type = NEWTON;
-	//frac.type = BURNING_SHIP;
     frac.c_min.re = -2.0; frac.c_max.re = 1.0;
     frac.c_min.im = -1.2; frac.c_max.im = frac.c_min.im + (frac.c_max.re - frac.c_min.re) * HEIGHT / WIDTH;
-    frac.julia_z.re = -0.7; frac.julia_z.im = 0.27015;
+    //frac.julia_z.re = -0.7; frac.julia_z.im = 0.27015;
+	frac.julia_z.re = 0.5667; frac.julia_z.im = 0;
+	frac.phoenix_p.re = -0.5; frac.phoenix_p.im= 0;
+    frac.c_min.re = -2.5; frac.c_max.re = 1.0;
+    frac.c_min.im = -1; frac.c_max.im = 1.0;//frac.c_min.im + (frac.c_max.re - frac.c_min.re) * HEIGHT / WIDTH;
     frac.width = WIDTH;
 	frac.height = HEIGHT;
 	frac.palette = FIRE;
 	frac.max_iter = DEFAULT_ITER;
+	frac.mouse_down = false;
 
 
     draw_fractal(&frac);

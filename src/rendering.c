@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rendering.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msottana <msottana@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/12 21:54:38 by msottana          #+#    #+#             */
+/*   Updated: 2025/04/12 22:03:06 by msottana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 uint32_t	palette_1(double t, t_palette palette)
@@ -83,6 +95,7 @@ uint32_t	color_palette(int iter, int max_iter, t_palette palette)
 				(int)(pow(iter_ratio, 2) * 255) << 16 | 255);
 	if (palette == BLACKWHITE)
 		return (iter % 2 == 0 ? 0x000000FF : 0xFFFFFFFF);
+		//return (uint32_t)(iter_ratio * 0xFF);
 
 	return (0xFFFFFFFF);
 }
@@ -98,11 +111,9 @@ void	draw_fractal(t_fractal *frac)
 	y = -1;
     while (++y < frac->height)
     {
-		//printf("(HEIGHT: %d, y: %d)", HEIGHT, y);
 		x = -1;
         while (++x < frac->width)
         {
-			//printf("(WIDTH: %d, x: %d)", WIDTH, x);
 			w.re = frac->c_min.re + (x / (double)frac->width) * (frac->c_max.re - frac->c_min.re);
 			w.im = frac->c_min.im + (y / (double)frac->height) * (frac->c_max.im - frac->c_min.im);
 			if (frac->type == MANDELBROT)
@@ -110,19 +121,13 @@ void	draw_fractal(t_fractal *frac)
 			else if (frac->type == JULIA)
 				iter = julia(&w, &frac->julia_z, frac->max_iter);
 			else if (frac->type == NEWTON)
-				iter = newton(&w, frac->max_iter);
+				iter = newton(&w, 1e-4, frac->max_iter);
 			else if (frac->type == BURNING_SHIP)
 				iter = burning_ship(&w, frac->max_iter);
 			else if (frac->type == PHOENIX)
 				iter = phoenix(&w, &frac->julia_z, &frac->phoenix_p, frac->max_iter);
-			//printf("(%d,%d): %d)", x, y, iter);
-			/*if (frac->type == NEWTON)
-            	color = color_palette(iter, 2, frac->palette);
-			else
-            	color = color_palette(iter, frac->max_iter, frac->palette);*/
 			color = color_palette(iter, frac->max_iter, frac->palette);
 			mlx_put_pixel(frac->img, x, y, color);
-            //*(uint32_t *)(frac->img->pixels + (y * frac->img->width + x) * 4) = color;
         }
     }
 }

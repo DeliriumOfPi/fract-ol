@@ -6,7 +6,7 @@
 /*   By: msottana <msottana@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 22:24:59 by msottana          #+#    #+#             */
-/*   Updated: 2025/03/30 17:07:08 by msottana         ###   ########.fr       */
+/*   Updated: 2025/04/12 22:25:14 by msottana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static void ft_hook(void* param)
 
             float hue = (x / (float)WIDTH) * 360; // Hue (0-360)
             float sat = 1.0;                      // Full saturation
-            float val = 1.0 - (y / (float)HEIGHT) * 0.5; // Gradient brightness
+            //float val = 1.0 - (y / (float)HEIGHT) * 0.5; // Gradient brightness
+            float val = 1.0 - (x / (float)WIDTH); // Gradient brightness
 
             uint32_t color = hsv_to_rgb(hue, sat, val);
             mlx_put_pixel(param, x, y, color);
