@@ -81,8 +81,8 @@ typedef struct	s_fractal
 	t_fractal_type	type;
 	t_complex		c_min;
 	t_complex		c_max;
-	t_complex		julia_z;
-	t_complex		phoenix_p;
+	t_complex		z;
+	t_complex		p;
 	t_palette		palette;
 	int				width;
 	int				height;

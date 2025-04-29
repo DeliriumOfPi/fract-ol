@@ -23,7 +23,10 @@ void	ft_error(mlx_t	*mlx, char *error_msg)
 
 void	init_fractal(int argc, char *argv[], t_fractal *frac)
 {
-	if (argc < 1)
+	if (argc < 2)
+		ft_error(NULL, 
+				"Se necesita al menos un argumento para indicar el tipo del fractal:\n
+				"
 
 	frac.type = 
 }
